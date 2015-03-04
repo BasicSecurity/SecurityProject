@@ -1,2 +1,0 @@
-# Basic-Security
-AES, RSA
