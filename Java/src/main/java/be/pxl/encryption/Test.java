@@ -1,4 +1,4 @@
-package be.pxl.basicSecurity;
+package be.pxl.encryption;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
