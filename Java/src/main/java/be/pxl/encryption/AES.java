@@ -15,31 +15,30 @@ public class AES {
 	//	The IV size of AES should be 16 bytes or 128 bits (which is the block size of AES-128).
 	//	If you use AES-256, the IV size should be 128 bits large, as the AES standard allows for 128 bit block sizes only.
 	//	The original Rijndael algorithm allowed for other block sizes including the 256 bit long block size.
-//	static String IV32Bytes = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
+	//	static String IV32Bytes = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
 	
 	static String plainText = "test text 123\0\0\0"; /* Note null padding */
 	static String plainTextNoPadding = "test text 123";
-	static String encryptionKey = "0123456789abcdef";
+	static String encryptionKey128Byte = "0123456789abcdef";
+	static String encryptionKey192Byte = "0123456789abcdefghijklmn";
+	
+	/*
+	 * 1 - Encrypte text + key to Byte array
+	 * 2 - 
+	 */
 
 	public static void main(String[] args) {
 		try {
 			System.out.printf("%-16s%s\n", "Plain text:", plainText);
 
-			byte[] cipher = encrypt(plainText, encryptionKey);
-			byte[] cipherAes256 = encryptAes256(plainTextNoPadding, IV, encryptionKey);
-
-			System.out.printf("%-16s","Cipher:");
-			for (int i = 0; i < cipher.length; i++)
-				System.out.print(new Integer(cipher[i]) + " ");
-			System.out.println("");
+			byte[] cipherAes128 = encrypt(plainText, encryptionKey128Byte);
+			byte[] cipherAes256 = encryptAes256(plainTextNoPadding, IV, encryptionKey128Byte);
 			
-			System.out.printf("%-16s","CipherAes256: ");
-			for (int i = 0; i < cipherAes256.length; i++)
-				System.out.print(new Integer(cipherAes256[i]) + " ");
-			System.out.println("");
+			printIntegers(cipherAes128, 128);
+			printIntegers(cipherAes256, 256);
 			
-			String decrypted = decrypt(cipher, encryptionKey);
-			String decryptedAes256 = decryptAes256(cipherAes256, IV, encryptionKey);
+			String decrypted = decrypt(cipherAes128, encryptionKey128Byte);
+			String decryptedAes256 = decryptAes256(cipherAes256, IV, encryptionKey128Byte);
 
 			System.out.printf("%-16s%s\n","Decrypt:", decrypted);
 			System.out.printf("%-16s%s","DecryptAes256:", decryptedAes256);
@@ -49,7 +48,21 @@ public class AES {
 		}
 	}
 
-	public static byte[] encrypt(String plainText, String encryptionKey) throws Exception {
+	private static void printIntegers(byte[] cipher, int keySize) {
+		if (keySize == 128){
+			System.out.printf("%-16s","Cipher:");
+			for (int i = 0; i < cipher.length; i++)
+				System.out.print(new Integer(cipher[i]) + " ");
+			System.out.println("");
+		} else if (keySize == 256){
+			System.out.printf("%-16s","CipherAes256: ");
+			for (int i = 0; i < cipher.length; i++)
+				System.out.print(new Integer(cipher[i]) + " ");
+			System.out.println("");
+		}
+	}
+
+	public static byte[] encrypt(String plainText, String encryptionKey128Byte) throws Exception {
 		//	IBM invented the Cipher Block Chaining (CBC) mode of operation in 1976.
 		//	In CBC mode, each block of plainText is XORed with the previous ciphertext block before being encrypted.
 		//	This way, each ciphertext block depends on all plainText blocks processed up to that point.
@@ -57,22 +70,22 @@ public class AES {
 		//	Note: Wiki says CBC requires padding contrary to this working example.
 		Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE"); // SunJCE = Java Cryptographic Extension framework
 		
-		SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
+		SecretKeySpec key = new SecretKeySpec(encryptionKey128Byte.getBytes("UTF-8"), "AES");
 		cipher.init(Cipher.ENCRYPT_MODE, key, new IvParameterSpec(IV.getBytes("UTF-8")));
 		return cipher.doFinal(plainText.getBytes("UTF-8"));
 	}
 
-	public static String decrypt(byte[] cipherText, String encryptionKey) throws Exception {
+	public static String decrypt(byte[] cipherText, String encryptionKey128Byte) throws Exception {
 		Cipher cipher = Cipher.getInstance("AES/CBC/NoPadding", "SunJCE");
-		SecretKeySpec key = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
+		SecretKeySpec key = new SecretKeySpec(encryptionKey128Byte.getBytes("UTF-8"), "AES");
 		cipher.init(Cipher.DECRYPT_MODE, key, new IvParameterSpec(IV.getBytes("UTF-8")));
 		return new String(cipher.doFinal(cipherText), "UTF-8");
 	}
 	
-	public static byte[] encryptAes256(String plainText, String IV, String encryptionKey){
+	public static byte[] encryptAes256(String plainText, String IV, String encryptionKey128Byte){
 		try {
             IvParameterSpec iv = new IvParameterSpec(IV.getBytes("UTF-8"));
-            SecretKeySpec secretkeySpec = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
+            SecretKeySpec secretkeySpec = new SecretKeySpec(encryptionKey128Byte.getBytes("UTF-8"), "AES");
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
             cipher.init(Cipher.ENCRYPT_MODE, secretkeySpec, iv);
             byte[] encrypted = cipher.doFinal(plainText.getBytes());
@@ -83,10 +96,10 @@ public class AES {
         return null;
 	}
 	
-	public static String decryptAes256(byte[] encrypted, String IV, String encryptionKey){
+	public static String decryptAes256(byte[] encrypted, String IV, String encryptionKey128Byte){
 		try {
             IvParameterSpec iv = new IvParameterSpec(IV.getBytes("UTF-8"));
-            SecretKeySpec secretkeySpec = new SecretKeySpec(encryptionKey.getBytes("UTF-8"), "AES");
+            SecretKeySpec secretkeySpec = new SecretKeySpec(encryptionKey128Byte.getBytes("UTF-8"), "AES");
             
 			//	PKCS5Padding is interpreted as a synonym for PKCS7Padding in the cipher specification.
 			//	It is simply a historical artifact, and rather than change it Sun decided to simply pretend 
