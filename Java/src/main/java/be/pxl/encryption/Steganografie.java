@@ -63,30 +63,31 @@ public class Steganografie {
 		// Messagesize binair in de eerste zoveel pixels stoppen
 		String messageSizeBinaryString = Integer.toString(messageSize, 2);
 		String messageBinaryLength = Integer.toString(message.length(),2);
-		
-		for(int i=0;i<numberOfLettersPixels;i++){
-			int rgb = img.getRGB(i, 0);
+//		
+//		for(int i=0;i<numberOfLettersPixels;i++){
+//			int rgb = img.getRGB(i, 0);
+//			
+//			int alpha = (rgb & 0xFF000000) >>> 24;
+//			int red = (rgb & 0x00FF0000) >>> 16;
+//			int green = (rgb & 0x0000FF00) >>> 8;
+//			int blue = (rgb & 0x000000FF) >>> 0;
+
 			
-			int alpha = (rgb & 0xFF000000) >>> 24;
-			int red = (rgb & 0x00FF0000) >>> 16;
-			int green = (rgb & 0x0000FF00) >>> 8;
-			int blue = (rgb & 0x000000FF) >>> 0;
-			
-			for(int j=0;j<3;j++){
-				//Generate new rgb int
-				
-				
-				
-			}
+//			for(int j=0;j<3;j++){
+//				//Generate new rgb int
+//				
+//				
+//				
+//			}
 			
 			
-			//Generate new rgb int
-			messageBinaryLength
-			
-			//implement new rgb			
-			img.setRGB(i, 0, arg2);
-		} 
-		img.setRGB(arg0, arg1, arg2);
+//			//Generate new rgb int
+//			messageBinaryLength
+//			
+//			//implement new rgb			
+//			img.setRGB(i, 0, arg2);
+//		} 
+//		img.setRGB(arg0, arg1, arg2);
 
 	}
 
