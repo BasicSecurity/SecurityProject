@@ -2,7 +2,7 @@ package be.pxl.encryption;
 
 import javax.crypto.SecretKeyFactory;
 
-public class Configuration {
+public class KeySettings {
 	private Algorithm algorithm;	// for SecretKeyFactory.getInstance
 	private String password;
 	private String salt;
@@ -10,15 +10,14 @@ public class Configuration {
 	private int iterations;
 	private int keySize;
 	
-	
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Algorithm getAlgorithm() {
-		return algorithm;
+	public String getAlgorithm() {
+		return algorithm.toString();
 	}
 	public void setAlgorithm(Algorithm algorithm) {
 		this.algorithm = algorithm;
@@ -29,8 +28,8 @@ public class Configuration {
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
-	public String getIv() {
-		return iv;
+	public byte[] getIv() {
+		return iv.getBytes();
 	}
 	public void setIv(String iv) {
 		this.iv = iv;
