@@ -1,15 +1,35 @@
 package be.pxl.encryption;
 
-import javax.crypto.SecretKeyFactory;
+import java.security.SecureRandom;
+import java.util.Random;
 
 public class KeySettings {
+	private String algorithmName;
 	private Algorithm algorithm;	// for SecretKeyFactory.getInstance
 	private String password;
 	private String salt;
-	private String iv;
+	private byte[] iv;
 	private int iterations;
 	private int keySize;
 	
+	public void initIv() {
+		this.iv = RandomGenerator.getBytes(16);
+	}
+	
+	public void initPassword(int bytes){
+		this.password = RandomGenerator.getString(32);
+	}
+	
+	public void initSalt(int bytes){
+		this.salt = RandomGenerator.getString(bytes);
+	}
+		
+	public String getAlgorithmName() {
+		return algorithmName;
+	}
+	public void setAlgorithmName(String algorithmName) {
+		this.algorithmName = algorithmName;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -29,9 +49,9 @@ public class KeySettings {
 		this.salt = salt;
 	}
 	public byte[] getIv() {
-		return iv.getBytes();
+		return iv;
 	}
-	public void setIv(String iv) {
+	public void setIv(byte[] iv) {
 		this.iv = iv;
 	}
 	public int getIterations() {
