@@ -56,18 +56,18 @@ public class Gui extends JFrame {
 		
 
 		
-//		westPanel.setLayout(new BorderLayout());
-//		westPanel.add(buttonPanel, BorderLayout.NORTH);
-//		westPanel.add(blanco1, BorderLayout.CENTER);
-//		buttonPanel.setLayout(new GridLayout(2, 1));
-//		buttonPanel.add(encryptButton);
-//		buttonPanel.add(decryptButton);
-//		eastPanel.setLayout(new BorderLayout());
-//		eastPanel.add(textPanel, BorderLayout.NORTH);
-//		eastPanel.add(blanco2, BorderLayout.CENTER);
-//		textPanel.setLayout(new GridLayout(2, 1));
-//		textPanel.add(encryptedTextArea);
-//		textPanel.add(decryptedTextArea);
+		westPanel.setLayout(new BorderLayout());
+		westPanel.add(buttonPanel, BorderLayout.NORTH);
+		westPanel.add(blanco1, BorderLayout.CENTER);
+		buttonPanel.setLayout(new GridLayout(2, 1));
+		buttonPanel.add(encryptButton);
+		buttonPanel.add(decryptButton);
+		eastPanel.setLayout(new BorderLayout());
+		eastPanel.add(textPanel, BorderLayout.NORTH);
+		eastPanel.add(blanco2, BorderLayout.CENTER);
+		textPanel.setLayout(new GridLayout(2, 1));
+		textPanel.add(encryptedTextArea);
+		textPanel.add(decryptedTextArea);
 		
 		setSize(new Dimension(500, 200));
 		setVisible(true);
@@ -75,6 +75,6 @@ public class Gui extends JFrame {
 	}
 
 	public static void main(String[] args) {
-//		Gui gui = new Gui();
+		Gui gui = new Gui();
 	}
 }
