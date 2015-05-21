@@ -22,6 +22,41 @@ public class RSA {
   public static final String PRIVATE_KEY_FILE = "private.key"; // Waar de private key wordt bijgehouden
   public static final String PUBLIC_KEY_FILE = "public.key"; // Waar de public key wordt bijgehouden
   
+  @SuppressWarnings("resource")
+	public static void main(String[] args) {
+	
+	    try {
+	
+	      if (!areKeysPresent()) {
+	        generateKey();
+	      }
+	
+	      	//final String originalText = "Text"; // Uncomment voor handmatig toevoegen
+			System.out.println("Geef de sleutel in:"); // Comment voor handmatig toevoegen
+			Scanner input = new Scanner(System.in); // Comment voor handmatig toevoegen
+			final String originalText = input.nextLine(); // Comment voor handmatig toevoegen
+			input.close(); // Comment voor handmatig toevoegen
+			
+	      ObjectInputStream inputStream = null;
+	
+	      inputStream = new ObjectInputStream(new FileInputStream(PUBLIC_KEY_FILE)); // Encrypteer met de public key
+	      final PublicKey publicKey = (PublicKey) inputStream.readObject();
+	      final byte[] cipherText = encrypt(originalText, publicKey);
+	
+	      inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE)); // Decrypteer met de private key
+	      final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
+	      final String plainText = decrypt(cipherText, privateKey);
+	
+	      // Printen in console
+	      //System.out.println("Original: " + originalText);
+	      //System.out.println("Encrypted: " +cipherText.toString());
+	      //System.out.println("Decrypted: " + plainText);
+	
+	    } catch (Exception e) {
+	      e.printStackTrace();
+	    }
+	  }
+  
 	  public static void generateKey() {
 	    try {
 	      final KeyPairGenerator keyGen = KeyPairGenerator.getInstance(ALGORITHM); // Maak een nieuw object aan van het type KeyPairGenerator
@@ -41,13 +76,13 @@ public class RSA {
 	      }
 	      publicKeyFile.createNewFile(); // Maak een leeg bestand aan, public.key
 	
-	      // Saving the Public key in a file
+	      // Public key opslaan
 	      ObjectOutputStream publicKeyOS = new ObjectOutputStream(
 	          new FileOutputStream(publicKeyFile));
 	      publicKeyOS.writeObject(key.getPublic());
 	      publicKeyOS.close();
 	
-	      // Saving the Private key in a file
+	      // Private key opslaan
 	      ObjectOutputStream privateKeyOS = new ObjectOutputStream(
 	          new FileOutputStream(privateKeyFile));
 	      privateKeyOS.writeObject(key.getPrivate());
@@ -72,10 +107,8 @@ public class RSA {
 	  public static byte[] encrypt(String text, PublicKey key) {
 	    byte[] cipherText = null;
 	    try {
-	      // get an RSA cipher object and print the provider
-	      final Cipher cipher = Cipher.getInstance(ALGORITHM);
-	      // encrypt the plain text using the public key
-	      cipher.init(Cipher.ENCRYPT_MODE, key);
+	      final Cipher cipher = Cipher.getInstance(ALGORITHM); // Algorithm = RSA
+	      cipher.init(Cipher.ENCRYPT_MODE, key); // Enrypteer met de public key
 	      cipherText = cipher.doFinal(text.getBytes());
 	    } catch (Exception e) {
 	      e.printStackTrace();
@@ -86,11 +119,9 @@ public class RSA {
 	  public static String decrypt(byte[] text, PrivateKey key) {
 	    byte[] dectyptedText = null;
 	    try {
-	      // get an RSA cipher object and print the provider
-	      final Cipher cipher = Cipher.getInstance(ALGORITHM);
+	      final Cipher cipher = Cipher.getInstance(ALGORITHM); // Algorithm = RSA
 	
-	      // decrypt the text using the private key
-	      cipher.init(Cipher.DECRYPT_MODE, key);
+	      cipher.init(Cipher.DECRYPT_MODE, key); // Decrypteer met de private key
 	      dectyptedText = cipher.doFinal(text);
 	
 	    } catch (Exception ex) {
@@ -98,45 +129,5 @@ public class RSA {
 	    }
 	
 	    return new String(dectyptedText);
-	  }
-
-  	@SuppressWarnings("resource")
-	public static void main(String[] args) {
-	
-	    try {
-	
-	      // Check if the pair of keys are present else generate those.
-	      if (!areKeysPresent()) {
-	        // Method generates a pair of keys using the RSA algorithm and stores it
-	        // in their respective files
-	        generateKey();
-	      }
-	
-	      //final String originalText = "Text to be encrypted ";
-			System.out.println("Geef de sleutel in:");
-			Scanner input = new Scanner(System.in);
-			final String originalText = input.nextLine();
-			input.close();
-			
-	      ObjectInputStream inputStream = null;
-	
-	      // Encrypt the string using the public key
-	      inputStream = new ObjectInputStream(new FileInputStream(PUBLIC_KEY_FILE));
-	      final PublicKey publicKey = (PublicKey) inputStream.readObject();
-	      final byte[] cipherText = encrypt(originalText, publicKey);
-	
-	      // Decrypt the cipher text using the private key.
-	      inputStream = new ObjectInputStream(new FileInputStream(PRIVATE_KEY_FILE));
-	      final PrivateKey privateKey = (PrivateKey) inputStream.readObject();
-	      final String plainText = decrypt(cipherText, privateKey);
-	
-	      // Printing the Original, Encrypted and Decrypted Text
-	      System.out.println("Original: " + originalText);
-	      System.out.println("Encrypted: " +cipherText.toString());
-	      System.out.println("Decrypted: " + plainText);
-	
-	    } catch (Exception e) {
-	      e.printStackTrace();
-	    }
 	  }
 }
