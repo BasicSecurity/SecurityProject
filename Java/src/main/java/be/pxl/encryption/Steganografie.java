@@ -54,8 +54,11 @@ public class Steganografie {
 	// Deze methode zorgt ervoor dat een binair getal altijd 8 bits heeft.
 	public String formatToBinaryString(int decimal) {
 		String binaryString = Integer.toString(decimal, 2);
+		System.out.println("BinaryString = " + binaryString);
+		System.out.println("Length: " + binaryString.length());
 		while (binaryString.length() != 8) {
 			binaryString = "0" + binaryString;
+			System.out.println("string adjusted");
 		}
 		return binaryString;
 	}
@@ -74,7 +77,7 @@ public class Steganografie {
 		System.out.println("Pixels for header: " + headerPixels);
 		System.out.println("Pixels for message: " + messagePixels);
 		System.out
-				.println("Maximum number of characters: " + messagePixels * 2);
+				.println("Maximum number of characters: " + messagePixels / 2);
 		System.out.println("Aantal tekens bericht: " + message.length());
 		System.out.println("Aantal pixels nodig: " + messageSize);
 
@@ -130,7 +133,10 @@ public class Steganografie {
 		// Bericht in array van strings omzetten
 		for (int i = 0; i < messageBytes.length; i++) {
 			Byte bytes = new Byte(messageBytes[i]);
-			messageArray[i] = "0" + Integer.toString(bytes.intValue(), 2);
+			messageArray[i] = Integer.toString(bytes.intValue(), 2);
+			while(messageArray[i].length()!=8){
+				messageArray[i] = "0" + messageArray[i];				
+			}
 			System.out.println(messageArray[i]);
 		}
 
@@ -138,6 +144,7 @@ public class Steganografie {
 		int i = 0;
 		for (int j = 0; j < messageArray.length; j++) {
 			for (int k = 0; k < 2; k++) {
+				System.out.println("character: " + j);
 
 				int rgb = image.getRGB(j + headerPixels, 0);
 
@@ -171,7 +178,7 @@ public class Steganografie {
 				System.out.println("Value " + j + ": " + newRgbValue);
 
 				image.setRGB(i + headerPixels, 0, newRgbValue);
-				System.out.println("Placed at pixel: " + (i + headerPixels));
+				System.out.println("Placed at pixel: " + (i + headerPixels) + "\n");
 				// System.out.println(image.getRGB(j + headerPixels, 0));
 
 				i++;
@@ -286,7 +293,7 @@ public class Steganografie {
 
 	public static void main(String[] args) {
 		Steganografie stegano = new Steganografie(new File("praisethelord.png"));
-		stegano.encrypt("testsdffffffffffffffffffffddddddddnor");
+		stegano.encrypt("Vrijdag 12u30 schoolpoort. Kom alleen");
 		stegano.decrypt();
 
 	}
