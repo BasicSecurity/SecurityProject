@@ -84,6 +84,7 @@ public class Steganografie {
 		System.out.println("");
 
 		// Messagesize binair in de eerste zoveel pixels stoppen
+
 		String messageSizeBinaryString = Integer.toString(messageSize, 2); // aantal pixels binair uitgeschreven
 		System.out.println("Aantal pixels nodig (binair): "
 				+ messageSizeBinaryString);
