@@ -4,13 +4,23 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 public class KeySettings {
-	private String algorithmName;
-	private Algorithm algorithm;	// for SecretKeyFactory.getInstance
+	private String algorithmName;	// "AES
+	private Algorithm algorithm;	// "AES/CBC/PKCS5Padding" for SecretKeyFactory.getInstance
 	private String password;
 	private String salt;
 	private byte[] iv;
 	private int iterations;
 	private int keySize;
+	
+	public KeySettings(){
+		algorithmName = "AES";
+		algorithm = Algorithm.AES_CBC_PKCS5PADDING; //"AES/CBC/PKCS5Padding";
+		initSalt(16);
+		initPassword(32);
+		initIv();
+		iterations = 3500;
+		keySize = 256;
+	}
 	
 	public void initIv() {
 		this.iv = RandomGenerator.getBytes(16);

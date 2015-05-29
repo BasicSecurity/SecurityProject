@@ -109,18 +109,19 @@ public class KeyStoreManager {
 			Key key = ksm.loadKey(keyStorePath, "aes1.key",
 					password.toCharArray());
 			
-			try {
-				byte[] encryptedMessage = aes.encrypt(
-						Serializer.serialize(text), (SecretKey) key, keySettings);
-				message = new Message(keySettings.getIv(), encryptedMessage);
-				byte[] decryptedMessage = aes.decrypt(message,(SecretKey) key,
-						keySettings);
-				System.out.printf("%-16s%s\n", "Plain text:", text);
-				System.out.println(aes.printEncrypted(encryptedMessage));
-				System.out.println(aes.printDecrypted(decryptedMessage) + "\n");
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			// ## Stopped working new AES class
+//			try {
+//				byte[] encryptedMessage = aes.encrypt(
+//						Serializer.serialize(text), (SecretKey) key, keySettings);
+//				message = new Message(keySettings.getIv(), encryptedMessage);
+//				byte[] decryptedMessage = aes.decrypt(message,(SecretKey) key,
+//						keySettings);
+//				System.out.printf("%-16s%s\n", "Plain text:", text);
+//				System.out.println(aes.printEncrypted(encryptedMessage));
+//				System.out.println(aes.printDecrypted(decryptedMessage) + "\n");
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

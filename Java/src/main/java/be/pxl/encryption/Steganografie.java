@@ -15,7 +15,6 @@ public class Steganografie {
 		try {
 			img = ImageIO.read(new File("praisethelord.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.message = message;
@@ -27,7 +26,6 @@ public class Steganografie {
 			// img = ImageIO.read(file);
 			img = ImageIO.read(new File("praisethelord.png"));
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.message = message;

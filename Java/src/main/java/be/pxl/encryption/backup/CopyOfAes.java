@@ -39,12 +39,6 @@ public class CopyOfAes implements Serializable {
 	// If you use AES-256, the IV size should be 128 bits large, as the AES
 	// standard allows for 128 bit block sizes only.
 	// The original Rijndael algorithm allowed for other block sizes including
-	// the 256 bit long block size.
-	// String IV32Bytes = "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA";
-	// private String encryptionKey1 = "0123456789abcdef"; //128 bits
-	// private String encryptionKey2 = "0123456789abcdefghijklmn"; //192 bits
-	// private String encryptionKey3 = "0123456789abcdef0123456789abcdef"; //256
-	// bits
 
 	// Cipher block modes
 	// ------------------

@@ -199,19 +199,19 @@ public class CopyOfKeyStoreManager {
 			aesKey = keyStore.getSecretKey(keyAlias, password);
 
 		} catch (NoSuchAlgorithmException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (CertificateException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (UnrecoverableEntryException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (KeyStoreException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		} catch (Exception ex) {
 		    ex.printStackTrace();

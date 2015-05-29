@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>Encryption key settings file</comment>
+<entry key="Key">0e8c3a1710e6ceed9e4074882c60d38ace9f2662f04fb1c6323e6d587f838294</entry>
+<entry key="Algorithm">AES</entry>
+<entry key="Iv">zLGs0kFDmgzg3hms</entry>
+<entry key="Transformation">AES/CBC/PKCS5Padding</entry>
+</properties>

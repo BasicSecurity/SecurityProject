@@ -2,8 +2,6 @@ package be.pxl.encryption;
 
 public enum Algorithm {
 	
-
-	
 	AES_CBC_NOPADDING{
 		public String toString(){
 			return "AES/CBC/NoPadding";
@@ -29,9 +27,7 @@ public enum Algorithm {
 	
 	private String algorithm;
 	
-	private Algorithm() {
-		// TODO Auto-generated constructor stub
-	}
+	private Algorithm() { }
 	
 	Algorithm(String Algorithm){
 		this.algorithm = Algorithm;
